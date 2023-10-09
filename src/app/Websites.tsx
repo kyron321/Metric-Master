@@ -3,11 +3,10 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { Session } from "next-auth";
 import React, { useState } from "react";
-import Modal from "./Modal"; // Import the Modal component
-import PageSpeed from "@/components/Pagespeed"; // Import the PageSpeed component
+import Modal from "./Modal";
+import PageSpeed from "@/components/Pagespeed";
 import BinIcon from "./assets/icons/BinIcon";
-import VisitIcon from "./assets/icons/VisitIcon";
-import Link from "next/link"; // Import the Link component
+import Link from "next/link";
 
 interface WebsitesProps {
   session: Session;
@@ -41,18 +40,16 @@ export const Websites = ({ session }: WebsitesProps) => {
   const userId = session?.uid;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetching websites with query
   const { data, loading, error, refetch } = useQuery(GET_WEBSITES, {
     variables: { userId },
-    skip: !userId, // Skip the query if userId is not available
+    skip: !userId,
   });
 
-  // Delete website mutation
   const [deleteWebsite, { loading: deleteLoading }] = useMutation(
     DELETE_WEBSITE,
     {
       onCompleted: () => {
-        refetch(); // Refetch websites after a successful deletion
+        refetch();
       },
       onError: (err) => {
         console.error("Error deleting website:", err);
@@ -60,7 +57,6 @@ export const Websites = ({ session }: WebsitesProps) => {
     }
   );
 
-  // Handler to delete a website
   const handleDelete = (website: string) => {
     if (!userId) return;
     deleteWebsite({

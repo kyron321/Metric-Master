@@ -21,7 +21,6 @@ export const GET = async (req: NextRequest) => {
       `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&category=accessibility&category=seo&category=best-practices`
     );
 
-    // Extract the required Lighthouse scores
     const lighthouseResult = response.data.lighthouseResult;
     const scores = {
       performance: lighthouseResult?.categories?.performance?.score * 100 || 'N/A',

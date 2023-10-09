@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Session } from "next-auth"; // Assuming you're using NextAuth
+import { Session } from "next-auth";
 
-// GraphQL Mutation to update the PageSpeed data in DynamoDB
 const UPDATE_PAGESPEED = gql`
   mutation UpdatePageSpeed(
     $website: String!
@@ -39,13 +38,12 @@ interface WebsitesProps {
 }
 
 const PageSpeed = ({ session }: WebsitesProps) => {
-  const userId = session?.uid; // Get userId from session
+  const userId = session?.uid; 
   const [url, setUrl] = useState('');
   const [data, setData] = useState<{ performance: number; accessibility: number; seo: number; bestPractices: number } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Use the Apollo useMutation hook for the GraphQL mutation
   const [updatePageSpeed] = useMutation(UPDATE_PAGESPEED);
 
   const handleFetchData = async () => {
@@ -58,7 +56,6 @@ const PageSpeed = ({ session }: WebsitesProps) => {
     }
 
     try {
-      // Fetch PageSpeed data from the API
       const response = await fetch(`/api/pagespeed?url=${encodeURIComponent(fullUrl)}`);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -67,11 +64,10 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       const result = await response.json();
       setData(result.scores);
 
-      // Call the GraphQL mutation to update the PageSpeed data in DynamoDB
       await updatePageSpeed({
         variables: {
           website: fullUrl,
-          userId, // The userId from the session
+          userId,
           accessibility: result.scores.accessibility,
           bestPractices: result.scores.bestPractices,
           performance: result.scores.performance,

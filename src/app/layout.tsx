@@ -1,6 +1,6 @@
 import "@/styles/global.css";
 import { ParentProvider } from "@/components/ParentProvider";
-import Header from "@/components/Header"; // Import the Header component
+import Header from "@/components/Header";
 import type { Metadata } from "next";
 import SessionWrapper from "@/components/SessionWrapper";
 

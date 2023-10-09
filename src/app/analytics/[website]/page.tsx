@@ -25,7 +25,7 @@ const Analytics = () => {
 
   const { data, loading, error, refetch } = useQuery(GET_WEBSITES, {
     variables: { userId },
-    skip: !userId, // Skip the query if userId is not available
+    skip: !userId,
   });
 
   console.log("data", data); 

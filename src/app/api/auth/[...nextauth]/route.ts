@@ -1,7 +1,6 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
-// Extend the Session type to include uid
 declare module "next-auth" {
   interface Session {
     uid?: string;
@@ -17,11 +16,10 @@ const handler = NextAuth({
     ],
     callbacks: {
         async session({ session, token, user }) {
-          session.uid = token.sub; // Add UID to session
+          session.uid = token.sub;
           return session;
         },
     },
 });
 
-// Make sure to export the handler for both GET and POST requests
 export { handler as GET, handler as POST };
