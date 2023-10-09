@@ -95,7 +95,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             />
             <div className="flex-1">
               <span className="text-lg font-semibold text-white">
-                {d.website.replace(/^https?:\/\//, "")}
+                {d.website.replace(/^https?:\/\//, "").split('.')[0]}
               </span>
               <div className="flex space-x-4 mt-1">
                 <span className="text-sm text-gray-300">
@@ -114,7 +114,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             </div>
 
             <button className="bg-gray-800 text-white px-3 py-1 rounded">
-              <Link href={`/analytics/${new URL(d.website).hostname.replace(/^www\./, "").split('.')[0]}`}>
+              <Link href={`/analytics/${d.website.replace(/^https?:\/\//, "").split('.')[0]}`}>
                 View Analytics
               </Link>
             </button>
