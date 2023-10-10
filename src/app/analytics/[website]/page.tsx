@@ -8,7 +8,12 @@ const ParentComponent = () => {
   const params = useParams(); // Get dynamic parameters from the URL
   const website = Array.isArray(params.website) ? params.website[0] : params.website; // Ensure website is a string
 
-  return <Analytics website={website || ''} />;
+  return (
+    <>
+    <Analytics website={website || ''} />
+    </>
+  )
+  
 };
 
 export default ParentComponent;

@@ -49,7 +49,7 @@ const CircleProgress: React.FC<CircleProgressProps> = ({ score, label }) => {
           strokeDashoffset={offset}
           transform="rotate(-90 60 60)"
           style={{
-            transition: 'stroke-dashoffset 1s ease-in-out', // Slower transition of 1 second
+            transition: 'stroke-dashoffset 0.75s ease-in-out', // Slower transition of 1 second
           }}
         />
         <text
