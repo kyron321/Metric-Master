@@ -44,14 +44,14 @@ const PagespeedChart: React.FC<PagespeedChartProps> = ({ website }) => {
     borderRadius: "8px",
   };
 
-  const xAxisLabels = [6, 5, 4, 3, 2, 1]; // Custom x-axis labels
+  const xAxisLabels = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]; // Custom x-axis labels
 
   return (
     <div style={{ color: "white" }}>
       <h2>Pagespeed Insights Over Time</h2>
       <div style={chartStyle}>
         <LineChart
-          width={1000}
+          width={1200}
           height={600}
           series={[
             {
