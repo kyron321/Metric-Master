@@ -3,7 +3,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
 import React from "react";
-import CircleProgress from '@/components/CircleProgress';
+import CircleProgress from "@/components/CircleProgress";
 import PagespeedChart from "@/components/PagespeedChart"; // Adjust the import path as necessary
 
 const GET_WEBSITE = gql`
@@ -55,25 +55,33 @@ const Analytics: React.FC<AnalyticsProps> = ({ website }) => {
       <h1 className="text-3xl font-bold">{websiteData.website}</h1>
       <div className="mt-4">
         {websiteData ? (
-          <div className="">
-          <CircleProgress
-            score={websiteData.pagespeedInsightsMobile.performance.slice(-1)[0]}
-            label="Performance"
-          />
-          <CircleProgress
-            score={websiteData.pagespeedInsightsMobile.accessibility.slice(-1)[0]}
-            label="Accessibility"
-          />
-          <CircleProgress
-            score={websiteData.pagespeedInsightsMobile.bestPractices.slice(-1)[0]}
-            label="Best Practices"
-          />
-          <CircleProgress
-            score={websiteData.pagespeedInsightsMobile.seo.slice(-1)[0]}
-            label="SEO"
-          />
-          <PagespeedChart website={website}/>
-        </div>
+          <div className="flex flex-col align-center">
+            <div className="flex flex-row">
+              <CircleProgress
+                score={
+                  websiteData.pagespeedInsightsMobile.performance.slice(-1)[0]
+                }
+                label="Performance"
+              />
+              <CircleProgress
+                score={
+                  websiteData.pagespeedInsightsMobile.accessibility.slice(-1)[0]
+                }
+                label="Accessibility"
+              />
+              <CircleProgress
+                score={
+                  websiteData.pagespeedInsightsMobile.bestPractices.slice(-1)[0]
+                }
+                label="Best Practices"
+              />
+              <CircleProgress
+                score={websiteData.pagespeedInsightsMobile.seo.slice(-1)[0]}
+                label="SEO"
+              />
+            </div>
+            <PagespeedChart website={website} />
+          </div>
         ) : (
           <p>No website found.</p>
         )}

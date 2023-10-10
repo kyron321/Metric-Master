@@ -38,13 +38,25 @@ const PagespeedChart: React.FC<PagespeedChartProps> = ({ website }) => {
 
   const websiteData = data?.website?.pagespeedInsightsMobile;
 
+  // Generate dynamic x-axis labels based on the length of performance data
+  let entriesCount = websiteData?.performance?.length || 0;
+
+  // Adjust the labels and handle the case where we duplicate the first entry
+  const xAxisLabels = Array.from({ length: entriesCount + 1 }, (_, i) => entriesCount - i + 1); // Creates [2, 1] or [n, n-1, ..., 2, 1]
+
+  // Duplicate the first data point to mimic its value as the second one
+  const duplicateData = (data: number[]) => {
+    if (data.length > 0) {
+      return [data[0], ...data]; // Add the first entry again at the start
+    }
+    return [];
+  };
+
   const chartStyle = {
     backgroundColor: "white",
     padding: "10px",
     borderRadius: "8px",
   };
-
-  const xAxisLabels = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]; // Custom x-axis labels
 
   return (
     <div style={{ color: "white" }}>
@@ -57,22 +69,22 @@ const PagespeedChart: React.FC<PagespeedChartProps> = ({ website }) => {
             {
               curve: "linear",
               label: "Performance",
-              data: websiteData?.performance || [],
+              data: duplicateData(websiteData?.performance || []),
             },
             {
               curve: "linear",
               label: "Accessibility",
-              data: websiteData?.accessibility || [],
+              data: duplicateData(websiteData?.accessibility || []),
             },
             {
               curve: "linear",
               label: "Best Practices",
-              data: websiteData?.bestPractices || [],
+              data: duplicateData(websiteData?.bestPractices || []),
             },
             {
               curve: "linear",
               label: "SEO",
-              data: websiteData?.seo || [],
+              data: duplicateData(websiteData?.seo || []),
             },
           ]}
           xAxis={[{ scaleType: "point", data: xAxisLabels }]}
