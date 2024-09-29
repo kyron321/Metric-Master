@@ -1,9 +1,10 @@
-import Image from "next/image";
+import { HelloWorld } from "./HelloWorld";
 
 export default function Home() {
   return (
     <main>
       <h1>Metric Master</h1>
-    </main>    
+      <HelloWorld />
+    </main>
   );
 }
