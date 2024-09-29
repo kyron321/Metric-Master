@@ -5,8 +5,17 @@ import { gql, useQuery } from "@apollo/client";
 export const HelloWorld = () => {
   const { data } = useQuery(gql`
     query {
-      hello
+      websites {
+        WebsiteDomain
+        WebsiteID
+        PagespeedInsights {
+          Accessibility
+          BestPractices
+          Performance
+          SEO
+        }
+      }
     }
   `);
-  return <div>{data?.hello}</div>;
+  return <div>{JSON.stringify(data)}</div>;
 };
