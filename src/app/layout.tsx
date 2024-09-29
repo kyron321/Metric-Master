@@ -1,3 +1,4 @@
+import "@/styles/global.css";
 import { ParentProvider } from "@/components/ParentProvider";
 import type { Metadata } from "next";
 
