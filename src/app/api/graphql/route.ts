@@ -15,7 +15,7 @@ const resolvers = {
     websites: async () => {
       const response = await ddbClient.send(
         new ScanCommand({
-          TableName: "MetricMaster",
+          TableName: "Metrics",
         })
       );
 
@@ -26,17 +26,16 @@ const resolvers = {
 
 const typeDefs = gql`
   type PagespeedInsights {
-    Accessibility: Float!
-    BestPractices: Float!
-    Performance: Float!
-    SEO: Float!
+    accessibility: Float!
+    bestPractices: Float!
+    performance: Float!
+    seo: Float!
   }
 
   type Website {
-    WebsiteDomain: String!
-    WebsiteID: Float!
-    PagespeedInsights: PagespeedInsights!
-
+    website: String!
+    userId: String!
+    pagespeedInsights: PagespeedInsights!
   }
   type Query {
     websites: [Website]
