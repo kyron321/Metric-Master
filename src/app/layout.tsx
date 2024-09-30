@@ -2,6 +2,7 @@ import "@/styles/global.css";
 import { ParentProvider } from "@/components/ParentProvider";
 import Header from "@/components/Header"; // Import the Header component
 import type { Metadata } from "next";
+import SessionWrapper from "@/components/SessionWrapper";
 
 export const metadata: Metadata = {
   title: "Metric Master - Home",
@@ -15,6 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <SessionWrapper>
     <ParentProvider>
       <html lang="en">
         <body>
@@ -23,5 +25,6 @@ export default function RootLayout({
         </body>
       </html>
     </ParentProvider>
+    </SessionWrapper>
   );
 }

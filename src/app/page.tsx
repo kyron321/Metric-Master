@@ -1,10 +1,20 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+import Dashboard from "@/components/Dashboard";
 import { HelloWorld } from "./HelloWorld";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
   return (
     <main>
-      <h1 className="text-sm">Metric Master</h1>
       <HelloWorld />
+      <Dashboard />
     </main>
   );
 }

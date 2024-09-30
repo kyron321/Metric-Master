@@ -2,13 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('/fonts/RobotoSlab-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0c1921;
+  --foreground: #222;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0C1921;
     --foreground: #ededed;
   }
 }
@@ -21,4 +36,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
 }
