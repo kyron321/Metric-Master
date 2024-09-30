@@ -5,6 +5,7 @@ import React from "react";
 
 const Dashboard = () => {
   const { data: session } = useSession();
+  console.log(session);
 
   return (
     <>
