@@ -2,7 +2,7 @@
 
 import { gql, useQuery } from "@apollo/client";
 
-export const HelloWorld = () => {
+export const HelloWebsites = () => {
   const { data } = useQuery(gql`
     query {
       websites {
@@ -25,12 +25,9 @@ export const HelloWorld = () => {
             <img
               src={`https://www.google.com/s2/favicons?domain=${d.website}&sz=50`}
             />{" "}
-            - {d.website}
-            - {d.userId}
-            - {d.pagespeedInsights.accessibility}
-            - {d.pagespeedInsights.bestPractices}
-            - {d.pagespeedInsights.performance}
-            - {d.pagespeedInsights.seo}
+            - {d.website}- {d.userId}- {d.pagespeedInsights.accessibility}-{" "}
+            {d.pagespeedInsights.bestPractices}-{" "}
+            {d.pagespeedInsights.performance}- {d.pagespeedInsights.seo}
           </div>
         );
       })}

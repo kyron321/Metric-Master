@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Dashboard from "@/components/Dashboard";
-import { HelloWorld } from "./HelloWorld";
+import { HelloWebsites } from "./Websites";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main>
-      <HelloWorld />
+      <HelloWebsites />
       <Dashboard />
     </main>
   );
