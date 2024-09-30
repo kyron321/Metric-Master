@@ -1,5 +1,6 @@
 import "@/styles/global.css";
 import { ParentProvider } from "@/components/ParentProvider";
+import Header from "@/components/Header"; // Import the Header component
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +17,10 @@ export default function RootLayout({
   return (
     <ParentProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <Header />
+          {children}
+        </body>
       </html>
     </ParentProvider>
   );
