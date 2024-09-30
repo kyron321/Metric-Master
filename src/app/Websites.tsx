@@ -2,7 +2,7 @@
 
 import { gql, useQuery } from "@apollo/client";
 
-export const HelloWebsites = () => {
+export const Websites = () => {
   const { data } = useQuery(gql`
     query {
       websites {
