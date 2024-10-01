@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+    "test:ts": "jest --config jest.config.ts",
+    "test:tsx": "jest --config jest.config.tsx.ts",
+    "test": "npm run test:ts && npm run test:tsx",
     "prepare": "husky"
   },
   "dependencies": {

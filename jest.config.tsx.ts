@@ -7,13 +7,13 @@ const createJestConfig = nextJest({
 
 const config: Config = {
   coverageProvider: 'v8',
-  testEnvironment: 'jest-environment-node',
+  testEnvironment: 'jest-environment-jsdom', // Environment for .tsx files
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  testMatch: ['<rootDir>/src/**/*.test.ts'],
+  testMatch: ['<rootDir>/src/**/*.test.tsx'],
 };
 
 export default createJestConfig(config);
