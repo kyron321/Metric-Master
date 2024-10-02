@@ -12,14 +12,15 @@ const ddbClient = new DynamoDBClient({
 
 const resolvers = {
   Query: {
-    websites: async () => {
+    websites: async (_: any, { userId }: { userId: string }) => {
       const response = await ddbClient.send(
         new ScanCommand({
           TableName: "Metrics",
         })
       );
 
-      return response.Items?.map((item) => unmarshall(item));
+      const items = response.Items?.map((item) => unmarshall(item));
+      return items?.filter((item) => item.userId === userId);
     },
   },
 };
@@ -37,8 +38,9 @@ const typeDefs = gql`
     userId: String!
     pagespeedInsights: PagespeedInsights!
   }
+
   type Query {
-    websites: [Website]
+    websites(userId: String!): [Website]
   }
 `;
 

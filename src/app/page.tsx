@@ -20,7 +20,7 @@ export default function Home() {
       ) : (
         <>
           <SignOut />
-          <Websites />
+          <Websites session={session} />
           <PageSpeed />
         </>
       )}
