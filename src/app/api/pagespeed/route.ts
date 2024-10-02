@@ -21,9 +21,6 @@ export const GET = async (req: NextRequest) => {
       `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&category=accessibility&category=seo&category=best-practices`
     );
 
-    // Log the entire lighthouseResult for debugging
-    console.log('Lighthouse Result:', response.data.lighthouseResult);
-
     // Extract the required Lighthouse scores
     const lighthouseResult = response.data.lighthouseResult;
     const scores = {
@@ -35,7 +32,6 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json({ url, scores });
   } catch (error) {
-    console.error('Error fetching PageSpeed Insights data:', error);
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
   }
 };
