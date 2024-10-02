@@ -3,7 +3,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 
-const Dashboard = () => {
+const SignOut = () => {
   const { data: session } = useSession();
   return (
     <>
@@ -43,4 +43,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default SignOut;
