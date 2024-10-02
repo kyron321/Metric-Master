@@ -2,7 +2,6 @@
 
 import { useSession } from "next-auth/react";
 import SignOut from "@/components/SignOut";
-import { Websites } from "./Websites";
 import PageSpeed from "@/components/Pagespeed";
 import SignIn from "@/components/SignIn";
 
@@ -15,14 +14,7 @@ export default function Home() {
 
   return (
     <main>
-      {!session ? (
-        <SignIn />
-      ) : (
-        <>
-          <Websites session={session} />
-          <PageSpeed />
-        </>
-      )}
+      <SignOut/>
     </main>
   );
 }

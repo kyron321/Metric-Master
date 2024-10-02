@@ -41,7 +41,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             src={`https://www.google.com/s2/favicons?domain=${d.website}&sz=50`}
             alt={`Favicon for ${d.website}`}
           />{" "}
-          - {d.website} - {d.userId} - {d.pagespeedInsights.accessibility} -{" "}
+          - {d.website} - {d.pagespeedInsights.accessibility} -{" "}
           {d.pagespeedInsights.bestPractices} - {d.pagespeedInsights.performance} -{" "}
           {d.pagespeedInsights.seo}
         </div>
