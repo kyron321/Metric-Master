@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import Dashboard from "@/components/Dashboard";
 import { Websites } from "./Websites";
+import PageSpeed from "@/components/Pagespeed";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <main>
       <Websites />
+      <PageSpeed />
       <Dashboard />
     </main>
   );
