@@ -1,29 +1,85 @@
-import { useState } from 'react';
+"use client";
 
-const PageSpeed = () => {
+import { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+import { Session } from "next-auth"; // Assuming you're using NextAuth
+
+// GraphQL Mutation to update the PageSpeed data in DynamoDB
+const UPDATE_PAGESPEED = gql`
+  mutation UpdatePageSpeed(
+    $website: String!
+    $userId: String!
+    $accessibility: Float!
+    $bestPractices: Float!
+    $performance: Float!
+    $seo: Float!
+  ) {
+    updatePageSpeed(
+      website: $website
+      userId: $userId
+      accessibility: $accessibility
+      bestPractices: $bestPractices
+      performance: $performance
+      seo: $seo
+    ) {
+      website
+      userId
+      pagespeedInsights {
+        accessibility
+        bestPractices
+        performance
+        seo
+      }
+    }
+  }
+`;
+
+interface WebsitesProps {
+  session: Session;
+}
+
+const PageSpeed = ({ session }: WebsitesProps) => {
+  const userId = session?.uid; // Get userId from session
   const [url, setUrl] = useState('');
   const [data, setData] = useState<{ performance: number; accessibility: number; seo: number; bestPractices: number } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Use the Apollo useMutation hook for the GraphQL mutation
+  const [updatePageSpeed] = useMutation(UPDATE_PAGESPEED);
 
   const handleFetchData = async () => {
     setLoading(true);
     setError(null);
 
     let fullUrl = url;
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
       fullUrl = `https://${url}`;
     }
 
     try {
+      // Fetch PageSpeed data from the API
       const response = await fetch(`/api/pagespeed?url=${encodeURIComponent(fullUrl)}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error("Failed to fetch data");
       }
+
       const result = await response.json();
       setData(result.scores);
+
+      // Call the GraphQL mutation to update the PageSpeed data in DynamoDB
+      await updatePageSpeed({
+        variables: {
+          website: fullUrl,
+          userId, // The userId from the session
+          accessibility: result.scores.accessibility,
+          bestPractices: result.scores.bestPractices,
+          performance: result.scores.performance,
+          seo: result.scores.seo,
+        },
+      });
     } catch (err) {
-      setError('Failed to fetch data');
+      setError("Failed to fetch data");
     } finally {
       setLoading(false);
     }
@@ -31,15 +87,14 @@ const PageSpeed = () => {
 
   return (
     <div>
-      <h1>PageSpeed Insights</h1>
       <input
         type="text"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         placeholder="Enter URL"
       />
-      <button onClick={handleFetchData} disabled={loading}>
-        {loading ? 'Loading...' : 'Fetch Data'}
+      <button onClick={handleFetchData} disabled={loading || !userId}>
+        {loading ? "Loading..." : "Add Website"}
       </button>
       {error && <p>{error}</p>}
       {data && (

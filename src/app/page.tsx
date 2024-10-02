@@ -20,7 +20,7 @@ export default function Home() {
       ) : (
         <>
           <Websites session={session} />
-          <PageSpeed />
+          <PageSpeed session={session} />
         </>
       )}
     </main>
