@@ -3,16 +3,23 @@ import { ApolloServer } from "@apollo/server";
 import { gql } from "graphql-tag";
 import { NextRequest } from "next/server";
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
-import { DynamoDBClient, ScanCommand, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  ScanCommand,
+  PutItemCommand,
+  DeleteItemCommand,
+} from "@aws-sdk/client-dynamodb";
 import { unmarshall, marshall } from "@aws-sdk/util-dynamodb";
 
+// DynamoDB Client setup
 const ddbClient = new DynamoDBClient({
   region: "eu-west-2",
 });
 
-// Resolvers
+// Resolvers for the GraphQL API
 const resolvers = {
   Query: {
+    // Fetch websites by userId
     websites: async (_: any, { userId }: { userId: string }) => {
       const response = await ddbClient.send(
         new ScanCommand({
@@ -24,7 +31,9 @@ const resolvers = {
       return items?.filter((item) => item.userId === userId);
     },
   },
+
   Mutation: {
+    // Mutation to update PageSpeed data for a website
     updatePageSpeed: async (
       _: any,
       {
@@ -54,6 +63,7 @@ const resolvers = {
         },
       };
 
+      // Save or update the item in DynamoDB
       await ddbClient.send(
         new PutItemCommand({
           TableName: "Metrics",
@@ -63,10 +73,31 @@ const resolvers = {
 
       return item;
     },
+
+    // Mutation to delete a website entry
+    deleteWebsite: async (
+      _: any,
+      { website, userId }: { website: string; userId: string }
+    ) => {
+      await ddbClient.send(
+        new DeleteItemCommand({
+          TableName: "Metrics",
+          Key: marshall({
+            website,
+            userId,
+          }),
+        })
+      );
+
+      return {
+        success: true,
+        message: `Website ${website} successfully deleted.`,
+      };
+    },
   },
 };
 
-// Type Definitions (Schema)
+// GraphQL Schema Definition
 const typeDefs = gql`
   type PagespeedInsights {
     accessibility: Float!
@@ -94,6 +125,13 @@ const typeDefs = gql`
       performance: Float!
       seo: Float!
     ): Website
+
+    deleteWebsite(website: String!, userId: String!): DeleteResponse
+  }
+
+  type DeleteResponse {
+    success: Boolean!
+    message: String!
   }
 `;
 
@@ -104,7 +142,7 @@ const server = new ApolloServer({
   plugins: [ApolloServerPluginLandingPageLocalDefault()],
 });
 
-// Handler for Next.js API Routes
+// Next.js API Handler for GraphQL
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {
   context: async (req) => ({ req }),
 });

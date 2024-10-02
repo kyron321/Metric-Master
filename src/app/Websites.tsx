@@ -1,6 +1,6 @@
 "use client";
 
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { Session } from "next-auth"; 
 
 interface WebsitesProps {
@@ -22,28 +22,65 @@ const GET_WEBSITES = gql`
   }
 `;
 
+const DELETE_WEBSITE = gql`
+  mutation DeleteWebsite($website: String!, $userId: String!) {
+    deleteWebsite(website: $website, userId: $userId) {
+      success
+      message
+    }
+  }
+`;
+
 export const Websites = ({ session }: WebsitesProps) => {
   const userId = session?.uid;
 
-  const { data, loading, error } = useQuery(GET_WEBSITES, {
+  // Fetching websites with query
+  const { data, loading, error, refetch } = useQuery(GET_WEBSITES, {
     variables: { userId },
     skip: !userId, // Skip the query if userId is not available
   });
 
-  if (loading) return <p>Loading...</p>;
+  // Delete website mutation
+  const [deleteWebsite, { loading: deleteLoading }] = useMutation(DELETE_WEBSITE, {
+    onCompleted: () => {
+      refetch(); // Refetch websites after a successful deletion
+    },
+    onError: (err) => {
+      console.error("Error deleting website:", err);
+    },
+  });
+
+  // Handler to delete a website
+  const handleDelete = (website: string) => {
+    if (!userId) return;
+    deleteWebsite({
+      variables: { website, userId },
+    });
+  };
+
+  if (loading || deleteLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
       {data?.websites?.map((d: any) => (
-        <div key={d.website} className="flex">
+        <div key={d.website} className="flex items-center space-x-4">
           <img
             src={`https://www.google.com/s2/favicons?domain=${d.website}&sz=50`}
             alt={`Favicon for ${d.website}`}
           />{" "}
-          - {d.website} - {d.pagespeedInsights.accessibility} -{" "}
-          {d.pagespeedInsights.bestPractices} - {d.pagespeedInsights.performance} -{" "}
-          {d.pagespeedInsights.seo}
+          <span>{d.website}</span>
+          <span>Performance: {d.pagespeedInsights.performance}</span>
+          <span>Accessibility: {d.pagespeedInsights.accessibility}</span>
+          <span>Best Practices: {d.pagespeedInsights.bestPractices}</span>
+          <span>SEO: {d.pagespeedInsights.seo}</span>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded"
+            onClick={() => handleDelete(d.website)}
+            disabled={deleteLoading}
+          >
+            {deleteLoading ? 'Deleting...' : 'Delete'}
+          </button>
         </div>
       ))}
     </div>
