@@ -86,20 +86,25 @@ const PageSpeed = ({ session }: WebsitesProps) => {
   };
 
   return (
-    <div>
+    <div className="text-white">
       <input
         type="text"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         placeholder="Enter URL"
+        className="w-full p-2 mb-4 bg-gray-700 text-white rounded"
       />
-      <button onClick={handleFetchData} disabled={loading || !userId}>
+      <button
+        onClick={handleFetchData}
+        disabled={loading || !userId}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+      >
         {loading ? "Loading..." : "Add Website"}
       </button>
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-500 mt-4">{error}</p>}
       {data && (
-        <div>
-          <h2>Scores for {url}</h2>
+        <div className="mt-4">
+          <h2 className="text-xl font-bold mb-2">Scores for {url}</h2>
           <p>Performance: {data.performance}</p>
           <p>Accessibility: {data.accessibility}</p>
           <p>SEO: {data.seo}</p>

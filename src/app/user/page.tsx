@@ -2,7 +2,6 @@
 
 import { useSession } from "next-auth/react";
 import SignOut from "@/components/SignOut";
-import PageSpeed from "@/components/Pagespeed";
 import SignIn from "@/components/SignIn";
 
 export default function Home() {

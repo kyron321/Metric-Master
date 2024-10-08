@@ -2,6 +2,9 @@
 
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { Session } from "next-auth";
+import React, { useState } from "react";
+import Modal from "./Modal"; // Import the Modal component
+import PageSpeed from "@/components/Pagespeed"; // Import the PageSpeed component
 
 interface WebsitesProps {
   session: Session;
@@ -33,6 +36,7 @@ const DELETE_WEBSITE = gql`
 
 export const Websites = ({ session }: WebsitesProps) => {
   const userId = session?.uid;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetching websites with query
   const { data, loading, error, refetch } = useQuery(GET_WEBSITES, {
@@ -65,58 +69,64 @@ export const Websites = ({ session }: WebsitesProps) => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-<div className="shadow-lg rounded-lg p-8 bg-gray-900">
-  <div className="flex justify-between items-center mb-6">
-    <h2 className="text-2xl font-bold text-white">Websites</h2>
-    <button className="bg-blue-500 text-white px-4 py-2 rounded">
-      Add a Website
-    </button>
-  </div>
-  <section className="space-y-4">
-    {data?.websites?.map((d: any) => (
-      <div
-        key={d.website}
-        className="bg-gray-700 shadow-md rounded-lg p-4 flex items-center space-x-4"
-      >
-        <img
-          src={`https://www.google.com/s2/favicons?domain=${d.website}&sz=50`}
-          alt={`Favicon for ${d.website}`}
-          className="w-8 h-8"
-        />
-        <div className="flex-1">
-          <span className="text-lg font-semibold text-white">
-            {d.website.replace(/^https?:\/\//, '')}
-          </span>
-          <div className="flex space-x-4 mt-1">
-            <span className="text-sm text-gray-300">
-              Performance: {d.pagespeedInsights.performance}
-            </span>
-            <span className="text-sm text-gray-300">
-              Accessibility: {d.pagespeedInsights.accessibility}
-            </span>
-            <span className="text-sm text-gray-300">
-              Best Practices: {d.pagespeedInsights.bestPractices}
-            </span>
-            <span className="text-sm text-gray-300">
-              SEO: {d.pagespeedInsights.seo}
-            </span>
-          </div>
-        </div>
-        <button className="bg-gray-800 text-white px-3 py-1 rounded">
-          <a href={`https://${d.website}`} target="_blank" rel="noopener noreferrer">
-            Visit Website
-          </a>
-        </button>
+    <div className="shadow-lg rounded-lg p-8 bg-gray-900">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-white">Websites</h2>
         <button
-          className="bg-red-500 text-white px-3 py-1 rounded"
-          onClick={() => handleDelete(d.website)}
-          disabled={deleteLoading}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={() => setIsModalOpen(true)}
         >
-          {deleteLoading ? "Deleting..." : "Delete"}
+          Add a Website
         </button>
       </div>
-    ))}
-  </section>
-</div>
+      <section className="space-y-4">
+        {data?.websites?.map((d: any) => (
+          <div
+            key={d.website}
+            className="bg-gray-700 shadow-md rounded-lg p-4 flex items-center space-x-4"
+          >
+            <img
+              src={`https://www.google.com/s2/favicons?domain=${d.website}&sz=50`}
+              alt={`Favicon for ${d.website}`}
+              className="w-8 h-8"
+            />
+            <div className="flex-1">
+              <span className="text-lg font-semibold text-white">
+                {d.website.replace(/^https?:\/\//, '')}
+              </span>
+              <div className="flex space-x-4 mt-1">
+                <span className="text-sm text-gray-300">
+                  Performance: {d.pagespeedInsights.performance}
+                </span>
+                <span className="text-sm text-gray-300">
+                  Accessibility: {d.pagespeedInsights.accessibility}
+                </span>
+                <span className="text-sm text-gray-300">
+                  Best Practices: {d.pagespeedInsights.bestPractices}
+                </span>
+                <span className="text-sm text-gray-300">
+                  SEO: {d.pagespeedInsights.seo}
+                </span>
+              </div>
+            </div>
+            <button className="bg-gray-800 text-white px-3 py-1 rounded">
+              <a href={`https://${d.website}`} target="_blank" rel="noopener noreferrer">
+                Visit Website
+              </a>
+            </button>
+            <button
+              className="bg-red-500 text-white px-3 py-1 rounded"
+              onClick={() => handleDelete(d.website)}
+              disabled={deleteLoading}
+            >
+              {deleteLoading ? "Deleting..." : "Delete"}
+            </button>
+          </div>
+        ))}
+      </section>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <PageSpeed session={session} />
+      </Modal>
+    </div>
   );
 };
