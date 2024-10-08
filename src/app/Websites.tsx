@@ -7,6 +7,7 @@ import Modal from "./Modal"; // Import the Modal component
 import PageSpeed from "@/components/Pagespeed"; // Import the PageSpeed component
 import BinIcon from "./assets/icons/BinIcon";
 import VisitIcon from "./assets/icons/VisitIcon";
+import Link from "next/link"; // Import the Link component
 
 interface WebsitesProps {
   session: Session;
@@ -111,14 +112,20 @@ export const Websites = ({ session }: WebsitesProps) => {
                 </span>
               </div>
             </div>
+
+            <button className="bg-gray-800 text-white px-3 py-1 rounded">
+              <Link href={`/analytics/${new URL(d.website).hostname.replace(/^www\./, "").split('.')[0]}`}>
+                View Analytics
+              </Link>
+            </button>
             <button className="bg-gray-800 text-white px-3 py-1 rounded">
               <a
-              className="flex gap-2"
-                href={`https://${d.website}`}
+                className="flex gap-2"
+                href={`${d.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Visit Website <VisitIcon/>
+                Visit Website
               </a>
             </button>
             <button
