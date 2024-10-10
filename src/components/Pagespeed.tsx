@@ -8,6 +8,7 @@ const UPDATE_PAGESPEED = gql`
   mutation UpdatePageSpeed(
     $website: String!
     $userId: String!
+    $fullUrl: String!
     $accessibility: Float!
     $bestPractices: Float!
     $performance: Float!
@@ -16,6 +17,7 @@ const UPDATE_PAGESPEED = gql`
     updatePageSpeed(
       website: $website
       userId: $userId
+      fullUrl: $fullUrl
       accessibility: $accessibility
       bestPractices: $bestPractices
       performance: $performance
@@ -23,6 +25,7 @@ const UPDATE_PAGESPEED = gql`
     ) {
       website
       userId
+      fullUrl
       pagespeedInsights {
         accessibility
         bestPractices
@@ -70,6 +73,7 @@ const PageSpeed = ({ session }: WebsitesProps) => {
         variables: {
           website: websiteName,
           userId,
+          fullUrl,
           accessibility: result.scores.accessibility,
           bestPractices: result.scores.bestPractices,
           performance: result.scores.performance,

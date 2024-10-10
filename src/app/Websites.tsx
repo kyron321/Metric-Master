@@ -67,6 +67,8 @@ export const Websites = ({ session }: WebsitesProps) => {
   if (loading || deleteLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+
+  console.log(data);
   return (
     <div className="shadow-lg rounded-lg p-8 bg-gray-900">
       <div className="flex justify-between items-center mb-6">
@@ -91,7 +93,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             />
             <div className="flex-1">
               <span className="text-lg font-semibold text-white">
-                {d.website.replace(/^https?:\/\//, "").split('.')[0]}
+                {d.website}
               </span>
               <div className="flex space-x-4 mt-1">
                 <span className="text-sm text-gray-300">
@@ -110,7 +112,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             </div>
 
             <button className="bg-gray-800 text-white px-3 py-1 rounded">
-              <Link href={`/analytics/${d.website.replace(/^https?:\/\//, "").split('.')[0]}`}>
+              <Link href={`/analytics/${d.website}`}>
                 View Analytics
               </Link>
             </button>

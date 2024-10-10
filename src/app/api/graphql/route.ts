@@ -39,6 +39,7 @@ const resolvers = {
       {
         website,
         userId,
+        fullUrl,
         accessibility,
         bestPractices,
         performance,
@@ -46,6 +47,7 @@ const resolvers = {
       }: {
         website: string;
         userId: string;
+        fullUrl: string;
         accessibility: number;
         bestPractices: number;
         performance: number;
@@ -55,6 +57,7 @@ const resolvers = {
       const item = {
         website,
         userId,
+        fullUrl,
         pagespeedInsights: {
           accessibility,
           bestPractices,
@@ -109,6 +112,7 @@ const typeDefs = gql`
   type Website {
     website: String!
     userId: String!
+    fullUrl: String!
     pagespeedInsights: PagespeedInsights!
   }
 
@@ -120,6 +124,7 @@ const typeDefs = gql`
     updatePageSpeed(
       website: String!
       userId: String!
+      fullUrl: String!
       accessibility: Float!
       bestPractices: Float!
       performance: Float!
