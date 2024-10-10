@@ -18,7 +18,7 @@ const GET_WEBSITES = gql`
       website
       userId
       fullUrl
-      pagespeedInsights {
+      pagespeedInsightsMobile {
         accessibility
         bestPractices
         performance
@@ -68,7 +68,6 @@ export const Websites = ({ session }: WebsitesProps) => {
   if (loading || deleteLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-
   console.log(data);
   return (
     <div className="shadow-lg rounded-lg p-8 bg-gray-900">
@@ -98,24 +97,22 @@ export const Websites = ({ session }: WebsitesProps) => {
               </span>
               <div className="flex space-x-4 mt-1">
                 <span className="text-sm text-gray-300">
-                  Performance: {d.pagespeedInsights.performance}
+                  Performance: {d.pagespeedInsightsMobile.performance}
                 </span>
                 <span className="text-sm text-gray-300">
-                  Accessibility: {d.pagespeedInsights.accessibility}
+                  Accessibility: {d.pagespeedInsightsMobile.accessibility}
                 </span>
                 <span className="text-sm text-gray-300">
-                  Best Practices: {d.pagespeedInsights.bestPractices}
+                  Best Practices: {d.pagespeedInsightsMobile.bestPractices}
                 </span>
                 <span className="text-sm text-gray-300">
-                  SEO: {d.pagespeedInsights.seo}
+                  SEO: {d.pagespeedInsightsMobile.seo}
                 </span>
               </div>
             </div>
 
             <button className="bg-gray-800 text-white px-3 py-1 rounded">
-              <Link href={`/analytics/${d.website}`}>
-                View Analytics
-              </Link>
+              <Link href={`/analytics/${d.website}`}>View Analytics</Link>
             </button>
             <button className="bg-gray-800 text-white px-3 py-1 rounded">
               <a

@@ -37,7 +37,7 @@ describe("GraphQL API handler (integration test)", () => {
             websites(userId: $userId) {
               website
               userId
-              pagespeedInsights {
+              pagespeedInsightsMobile {
                 accessibility
                 bestPractices
                 performance

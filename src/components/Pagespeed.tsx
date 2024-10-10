@@ -26,7 +26,7 @@ const UPDATE_PAGESPEED = gql`
       website
       userId
       fullUrl
-      pagespeedInsights {
+      pagespeedInsightsMobile {
         accessibility
         bestPractices
         performance
@@ -41,9 +41,14 @@ interface WebsitesProps {
 }
 
 const PageSpeed = ({ session }: WebsitesProps) => {
-  const userId = session?.uid; 
-  const [url, setUrl] = useState('');
-  const [data, setData] = useState<{ performance: number; accessibility: number; seo: number; bestPractices: number } | null>(null);
+  const userId = session?.uid;
+  const [url, setUrl] = useState("");
+  const [data, setData] = useState<{
+    performance: number;
+    accessibility: number;
+    seo: number;
+    bestPractices: number;
+  } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,10 +63,14 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       fullUrl = `https://${url}`;
     }
 
-    const websiteName = fullUrl.replace(/^(?:https?:\/\/)?(?:www\.)?([^\/]+).*$/, '$1').split('.')[0];
+    const websiteName = fullUrl
+      .replace(/^(?:https?:\/\/)?(?:www\.)?([^\/]+).*$/, "$1")
+      .split(".")[0];
 
     try {
-      const response = await fetch(`/api/pagespeed?url=${encodeURIComponent(fullUrl)}`);
+      const response = await fetch(
+        `/api/pagespeed?url=${encodeURIComponent(fullUrl)}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }

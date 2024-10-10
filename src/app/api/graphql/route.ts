@@ -58,7 +58,7 @@ const resolvers = {
         website,
         userId,
         fullUrl,
-        pagespeedInsights: {
+        pagespeedInsightsMobile: {
           accessibility,
           bestPractices,
           performance,
@@ -102,7 +102,7 @@ const resolvers = {
 
 // GraphQL Schema Definition
 const typeDefs = gql`
-  type PagespeedInsights {
+  type pagespeedInsightsMobile {
     accessibility: Float!
     bestPractices: Float!
     performance: Float!
@@ -113,7 +113,7 @@ const typeDefs = gql`
     website: String!
     userId: String!
     fullUrl: String!
-    pagespeedInsights: PagespeedInsights!
+    pagespeedInsightsMobile: pagespeedInsightsMobile!
   }
 
   type Query {

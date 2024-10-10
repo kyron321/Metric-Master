@@ -9,7 +9,7 @@ const GET_WEBSITES = gql`
     websites(userId: $userId) {
       website
       userId
-      pagespeedInsights {
+      pagespeedInsightsMobile {
         accessibility
         bestPractices
         performance
@@ -22,7 +22,7 @@ const GET_WEBSITES = gql`
 interface Website {
   website: string;
   userId: string;
-  pagespeedInsights: {
+  pagespeedInsightsMobile: {
     accessibility: number;
     bestPractices: number;
     performance: number;
@@ -52,10 +52,14 @@ const Analytics = () => {
           websites.map((website: Website) => (
             <div key={website.website} className="mb-4 p-4 bg-gray-800 rounded">
               <h2 className="text-xl font-semibold">{website.website}</h2>
-              <p>Performance: {website.pagespeedInsights.performance}</p>
-              <p>Accessibility: {website.pagespeedInsights.accessibility}</p>
-              <p>Best Practices: {website.pagespeedInsights.bestPractices}</p>
-              <p>SEO: {website.pagespeedInsights.seo}</p>
+              <p>Performance: {website.pagespeedInsightsMobile.performance}</p>
+              <p>
+                Accessibility: {website.pagespeedInsightsMobile.accessibility}
+              </p>
+              <p>
+                Best Practices: {website.pagespeedInsightsMobile.bestPractices}
+              </p>
+              <p>SEO: {website.pagespeedInsightsMobile.seo}</p>
             </div>
           ))
         ) : (
