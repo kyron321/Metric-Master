@@ -18,7 +18,7 @@ export const GET = async (req: NextRequest) => {
     }
 
     const response = await axios.get(
-      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&category=accessibility&category=seo&category=best-practices`
+      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&category=accessibility&category=seo&category=best-practices&strategy=mobile`
     );
 
     const lighthouseResult = response.data.lighthouseResult;
