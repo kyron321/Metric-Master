@@ -97,16 +97,19 @@ export const Websites = ({ session }: WebsitesProps) => {
               </span>
               <div className="flex space-x-4 mt-1">
                 <span className="text-sm text-gray-300">
-                  Performance: {d.pagespeedInsightsMobile.performance}
+                  Performance:{" "}
+                  {d.pagespeedInsightsMobile.performance.slice(-1)[0]}
                 </span>
                 <span className="text-sm text-gray-300">
-                  Accessibility: {d.pagespeedInsightsMobile.accessibility}
+                  Accessibility:{" "}
+                  {d.pagespeedInsightsMobile.accessibility.slice(-1)[0]}
                 </span>
                 <span className="text-sm text-gray-300">
-                  Best Practices: {d.pagespeedInsightsMobile.bestPractices}
+                  Best Practices:{" "}
+                  {d.pagespeedInsightsMobile.bestPractices.slice(-1)[0]}
                 </span>
                 <span className="text-sm text-gray-300">
-                  SEO: {d.pagespeedInsightsMobile.seo}
+                  SEO: {d.pagespeedInsightsMobile.seo.slice(-1)[0]}
                 </span>
               </div>
             </div>

@@ -59,10 +59,10 @@ const resolvers = {
         website: string;
         userId: string;
         fullUrl: string;
-        accessibility: number;
-        bestPractices: number;
-        performance: number;
-        seo: number;
+        accessibility: number[];
+        bestPractices: number[];
+        performance: number[];
+        seo: number[];
       }
     ) => {
       const item = {
@@ -112,10 +112,10 @@ const resolvers = {
 // GraphQL Schema Definition
 const typeDefs = gql`
   type pagespeedInsightsMobile {
-    accessibility: Float!
-    bestPractices: Float!
-    performance: Float!
-    seo: Float!
+    accessibility: [Float!]!
+    bestPractices: [Float!]!
+    performance: [Float!]!
+    seo: [Float!]!
   }
 
   type Website {
@@ -135,10 +135,10 @@ const typeDefs = gql`
       website: String!
       userId: String!
       fullUrl: String!
-      accessibility: Float!
-      bestPractices: Float!
-      performance: Float!
-      seo: Float!
+      accessibility: [Float!]!
+      bestPractices: [Float!]!
+      performance: [Float!]!
+      seo: [Float!]!
     ): Website
 
     deleteWebsite(website: String!, userId: String!): DeleteResponse

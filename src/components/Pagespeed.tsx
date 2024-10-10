@@ -9,10 +9,10 @@ const UPDATE_PAGESPEED = gql`
     $website: String!
     $userId: String!
     $fullUrl: String!
-    $accessibility: Float!
-    $bestPractices: Float!
-    $performance: Float!
-    $seo: Float!
+    $accessibility: [Float!]!
+    $bestPractices: [Float!]!
+    $performance: [Float!]!
+    $seo: [Float!]!
   ) {
     updatePageSpeed(
       website: $website
