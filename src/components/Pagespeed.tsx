@@ -55,6 +55,8 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       fullUrl = `https://${url}`;
     }
 
+    const websiteName = fullUrl.replace(/^(?:https?:\/\/)?(?:www\.)?([^\/]+).*$/, '$1').split('.')[0];
+
     try {
       const response = await fetch(`/api/pagespeed?url=${encodeURIComponent(fullUrl)}`);
       if (!response.ok) {
@@ -66,7 +68,7 @@ const PageSpeed = ({ session }: WebsitesProps) => {
 
       await updatePageSpeed({
         variables: {
-          website: fullUrl,
+          website: websiteName,
           userId,
           accessibility: result.scores.accessibility,
           bestPractices: result.scores.bestPractices,
