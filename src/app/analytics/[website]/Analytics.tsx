@@ -3,6 +3,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
 import React from "react";
+import CircleProgress from '@/components/CircleProgress';
 
 const GET_WEBSITE = gql`
   query GetWebsite($userId: String!, $website: String!) {
@@ -54,22 +55,23 @@ const Analytics: React.FC<AnalyticsProps> = ({ website }) => {
       <div className="mt-4">
         {websiteData ? (
           <div className="flex space-x-4 mt-1">
-            <span className="text-sm text-gray-300">
-              Performance:{" "}
-              {websiteData.pagespeedInsightsMobile.performance.slice(-1)[0]}
-            </span>
-            <span className="text-sm text-gray-300">
-              Accessibility:{" "}
-              {websiteData.pagespeedInsightsMobile.accessibility.slice(-1)[0]}
-            </span>
-            <span className="text-sm text-gray-300">
-              Best Practices:{" "}
-              {websiteData.pagespeedInsightsMobile.bestPractices.slice(-1)[0]}
-            </span>
-            <span className="text-sm text-gray-300">
-              SEO: {websiteData.pagespeedInsightsMobile.seo.slice(-1)[0]}
-            </span>
-          </div>
+          <CircleProgress
+            score={websiteData.pagespeedInsightsMobile.performance.slice(-1)[0]}
+            label="Performance"
+          />
+          <CircleProgress
+            score={websiteData.pagespeedInsightsMobile.accessibility.slice(-1)[0]}
+            label="Accessibility"
+          />
+          <CircleProgress
+            score={websiteData.pagespeedInsightsMobile.bestPractices.slice(-1)[0]}
+            label="Best Practices"
+          />
+          <CircleProgress
+            score={websiteData.pagespeedInsightsMobile.seo.slice(-1)[0]}
+            label="SEO"
+          />
+        </div>
         ) : (
           <p>No website found.</p>
         )}
