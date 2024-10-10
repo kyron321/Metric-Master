@@ -30,6 +30,17 @@ const resolvers = {
       const items = response.Items?.map((item) => unmarshall(item));
       return items?.filter((item) => item.userId === userId);
     },
+    // Fetch a single website by userId and website
+    website: async (_: any, { userId, website }: { userId: string; website: string }) => {
+      const response = await ddbClient.send(
+        new ScanCommand({
+          TableName: "Metrics",
+        })
+      );
+
+      const items = response.Items?.map((item) => unmarshall(item));
+      return items?.find((item) => item.userId === userId && item.website === website);
+    },
   },
 
   Mutation: {
@@ -66,7 +77,6 @@ const resolvers = {
         },
       };
 
-      // Save or update the item in DynamoDB
       await ddbClient.send(
         new PutItemCommand({
           TableName: "Metrics",
@@ -77,7 +87,6 @@ const resolvers = {
       return item;
     },
 
-    // Mutation to delete a website entry
     deleteWebsite: async (
       _: any,
       { website, userId }: { website: string; userId: string }
@@ -118,6 +127,7 @@ const typeDefs = gql`
 
   type Query {
     websites(userId: String!): [Website]
+    website(userId: String!, website: String!): Website
   }
 
   type Mutation {

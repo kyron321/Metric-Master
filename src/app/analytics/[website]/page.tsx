@@ -1,73 +1,10 @@
-"use client";
-
-import { gql, useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import React from "react";
+import Analytics from "./Analytics"; // Adjust the import path as necessary
 
-const GET_WEBSITES = gql`
-  query GetWebsites($userId: String!) {
-    websites(userId: $userId) {
-      website
-      userId
-      pagespeedInsightsMobile {
-        accessibility
-        bestPractices
-        performance
-        seo
-      }
-    }
-  }
-`;
+const ParentComponent = () => {
+  const website = "kyronsmith"; // Replace with the actual website value
 
-interface Website {
-  website: string;
-  userId: string;
-  pagespeedInsightsMobile: {
-    accessibility: number;
-    bestPractices: number;
-    performance: number;
-    seo: number;
-  };
-}
-
-const Analytics = () => {
-  const { data: session, status } = useSession();
-  const userId = session?.uid;
-
-  const { data, loading, error } = useQuery(GET_WEBSITES, {
-    variables: { userId },
-    skip: !userId, // Skip the query if userId is not available
-  });
-
-  if (status === "loading" || loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const websites = data?.websites || [];
-
-  return (
-    <div className="p-8 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold">Analytics</h1>
-      <div className="mt-4">
-        {websites.length > 0 ? (
-          websites.map((website: Website) => (
-            <div key={website.website} className="mb-4 p-4 bg-gray-800 rounded">
-              <h2 className="text-xl font-semibold">{website.website}</h2>
-              <p>Performance: {website.pagespeedInsightsMobile.performance}</p>
-              <p>
-                Accessibility: {website.pagespeedInsightsMobile.accessibility}
-              </p>
-              <p>
-                Best Practices: {website.pagespeedInsightsMobile.bestPractices}
-              </p>
-              <p>SEO: {website.pagespeedInsightsMobile.seo}</p>
-            </div>
-          ))
-        ) : (
-          <p>No websites found.</p>
-        )}
-      </div>
-    </div>
-  );
+  return <Analytics website={website} />;
 };
 
-export default Analytics;
+export default ParentComponent;
