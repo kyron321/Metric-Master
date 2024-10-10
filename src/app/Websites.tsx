@@ -17,6 +17,7 @@ const GET_WEBSITES = gql`
     websites(userId: $userId) {
       website
       userId
+      fullUrl
       pagespeedInsights {
         accessibility
         bestPractices
@@ -87,7 +88,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             className="bg-gray-700 shadow-md rounded-lg p-4 flex items-center space-x-4"
           >
             <img
-              src={`https://www.google.com/s2/favicons?domain=${d.website}&sz=50`}
+              src={`https://www.google.com/s2/favicons?domain=${d.fullUrl}&sz=50`}
               alt={`Favicon for ${d.website}`}
               className="w-8 h-8"
             />
@@ -119,7 +120,7 @@ export const Websites = ({ session }: WebsitesProps) => {
             <button className="bg-gray-800 text-white px-3 py-1 rounded">
               <a
                 className="flex gap-2"
-                href={`${d.website}`}
+                href={`${d.fullUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
