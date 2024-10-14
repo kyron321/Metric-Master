@@ -102,7 +102,7 @@ const PageSpeed = ({ session }: WebsitesProps) => {
         type="text"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
-        placeholder="Enter URL"
+        placeholder="Enter website URL (example.com)"
         className="w-full p-2 mb-4 bg-gray-700 text-white rounded"
       />
       <button
