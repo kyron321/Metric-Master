@@ -72,9 +72,9 @@ export const Websites = ({ session }: WebsitesProps) => {
   return (
     <div className="shadow-lg rounded-lg p-8 bg-gray-900">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">Websites</h2>
+        <h2 className="text-2xl font-bold text-mm-white">Websites</h2>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-secondary hover:bg-secondary-dark transition-colors text-mm-white px-4 py-2 rounded"
           onClick={() => setIsModalOpen(true)}
         >
           Add a Website
@@ -92,32 +92,32 @@ export const Websites = ({ session }: WebsitesProps) => {
               className="w-8 h-8"
             />
             <div className="flex-1">
-              <span className="text-lg font-semibold text-white">
+              <span className="text-lg font-semibold text-mm-white">
                 {d.website}
               </span>
               <div className="flex space-x-4 mt-1">
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-mm-white">
                   Performance:{" "}
                   {d.pagespeedInsightsMobile.performance.slice(-1)[0]}
                 </span>
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-mm-white">
                   Accessibility:{" "}
                   {d.pagespeedInsightsMobile.accessibility.slice(-1)[0]}
                 </span>
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-mm-white">
                   Best Practices:{" "}
                   {d.pagespeedInsightsMobile.bestPractices.slice(-1)[0]}
                 </span>
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-mm-white">
                   SEO: {d.pagespeedInsightsMobile.seo.slice(-1)[0]}
                 </span>
               </div>
             </div>
 
-            <button className="bg-gray-800 text-white px-3 py-1 rounded">
+            <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
               <Link href={`/analytics/${d.website}`}>View Analytics</Link>
             </button>
-            <button className="bg-gray-800 text-white px-3 py-1 rounded">
+            <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
               <a
                 className="flex gap-2"
                 href={`${d.fullUrl}`}
@@ -128,7 +128,7 @@ export const Websites = ({ session }: WebsitesProps) => {
               </a>
             </button>
             <button
-              className="bg-red-500 text-white px-3 py-1 rounded"
+              className="bg-mm-red hover:bg-mm-red-dark text-mm-white px-2 py-2 rounded transition-colors"
               onClick={() => handleDelete(d.website)}
               disabled={deleteLoading}
             >

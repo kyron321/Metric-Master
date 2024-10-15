@@ -97,18 +97,18 @@ const PageSpeed = ({ session }: WebsitesProps) => {
   };
 
   return (
-    <div className="text-white">
+    <div className="text-mm-white">
       <input
         type="text"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         placeholder="Enter website URL (example.com)"
-        className="w-full p-2 mb-4 bg-gray-700 text-white rounded"
+        className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
       />
       <button
         onClick={handleFetchData}
         disabled={loading || !userId}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+        className="bg-secondary hover:bg-secondary-dark text-mm-white font-bold py-2 px-4 rounded w-full"
       >
         {loading ? "Loading..." : "Add Website"}
       </button>
