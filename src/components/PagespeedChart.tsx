@@ -4,6 +4,7 @@ import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { gql, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
+import Papa from "papaparse";
 
 interface PagespeedChartProps {
   website: string;
@@ -53,14 +54,45 @@ const PagespeedChart: React.FC<PagespeedChartProps> = ({ website }) => {
   };
 
   const chartStyle = {
+    width: "fit-content",
     backgroundColor: "white",
     padding: "10px",
     borderRadius: "8px",
   };
 
+  const handleExportCSV = () => {
+    const csvData = [
+      ["Label", "Performance", "Accessibility", "Best Practices", "SEO"],
+      ...xAxisLabels.map((label, index) => [
+        label,
+        websiteData?.performance[index] || "",
+        websiteData?.accessibility[index] || "",
+        websiteData?.bestPractices[index] || "",
+        websiteData?.seo[index] || "",
+      ]),
+    ];
+
+    const csv = Papa.unparse(csvData);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `${website}_pagespeed_insights.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div style={{ color: "white" }}>
-      <h2>Pagespeed Insights Over Time</h2>
+    <div style={{ color: "white", margin: "auto" }}>
+      <h2 className="text-2xl font-bold text-mm-white pb-4">Pagespeed Insights Over Time</h2>
+      <button
+        className="bg-mm-red hover:bg-mm-red-dark text-white px-3 py-1 rounded mb-4"
+        onClick={handleExportCSV}
+      >
+        Export as CSV
+      </button>
       <div style={chartStyle}>
         <LineChart
           width={1200}

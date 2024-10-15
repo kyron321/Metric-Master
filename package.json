@@ -26,6 +26,7 @@
     "axios": "^1.7.7",
     "next": "14.2.13",
     "next-auth": "^4.24.8",
+    "papaparse": "^5.4.1",
     "react": "^18",
     "react-dom": "^18"
   },
@@ -36,6 +37,7 @@
     "@types/axios": "^0.14.0",
     "@types/jest": "^29.5.13",
     "@types/node": "^20",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
