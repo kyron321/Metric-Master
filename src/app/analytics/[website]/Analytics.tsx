@@ -51,12 +51,12 @@ const Analytics: React.FC<AnalyticsProps> = ({ website }) => {
   const websiteData = data?.website;
 
   return (
-    <div className="p-8 bg-gray-900 text-mm-white flex flex-col">
-      <h1 className="text-3xl font-bold">{websiteData.website}</h1>
+    <div className="p-8 bg-gray-900 text-mm-white flex flex-col text-center">
+      <h1 className="text-3xl font-bold text-mm-white pb-4">{websiteData.website}</h1>
       <div className="mt-4">
         {websiteData ? (
           <div className="flex flex-col align-center">
-            <div className="flex flex-row">
+            <div className="flex flex-row mx-auto pb-8">
               <CircleProgress
                 score={
                   websiteData.pagespeedInsightsMobile.performance.slice(-1)[0]

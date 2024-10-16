@@ -63,7 +63,7 @@ const CircleProgress: React.FC<CircleProgressProps> = ({ score, label }) => {
           {score}
         </text>
       </svg>
-      <span className="text-sm text-gray-300">{label}</span>
+      <span className="text-sm text-gray-300 font-bold">{label}</span>
     </div>
   );
 };

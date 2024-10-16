@@ -43,6 +43,7 @@ interface WebsitesProps {
 const PageSpeed = ({ session }: WebsitesProps) => {
   const userId = session?.uid;
   const [url, setUrl] = useState("");
+  const [wordpress, setWordpress] = useState("");
   const [data, setData] = useState<{
     performance: number;
     accessibility: number;
@@ -62,6 +63,8 @@ const PageSpeed = ({ session }: WebsitesProps) => {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       fullUrl = `https://${url}`;
     }
+    
+    let wordpress = wordpress;
 
     const websiteName = fullUrl
       .replace(/^(?:https?:\/\/)?(?:www\.)?([^\/]+).*$/, "$1")
@@ -105,6 +108,13 @@ const PageSpeed = ({ session }: WebsitesProps) => {
         placeholder="Enter website URL (example.com)"
         className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
       />
+      <input
+        type="text"
+        value={wordpress}
+        onChange={(e) => setWordpress(e.target.value)}
+        placeholder="Enter Wordpress Application Password"
+        className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
+      />
       <button
         onClick={handleFetchData}
         disabled={loading || !userId}
@@ -115,11 +125,7 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       {error && <p className="text-red-500 mt-4">{error}</p>}
       {data && (
         <div className="mt-4">
-          <h2 className="text-xl font-bold mb-2">Scores for {url}</h2>
-          <p>Performance: {data.performance}</p>
-          <p>Accessibility: {data.accessibility}</p>
-          <p>SEO: {data.seo}</p>
-          <p>Best Practices: {data.bestPractices}</p>
+          <h2 className="text-xl font-bold mb-2">Your website has been successfully added!</h2>
         </div>
       )}
     </div>

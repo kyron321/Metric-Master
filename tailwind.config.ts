@@ -17,9 +17,9 @@ const config: Config = {
       },
       colors: {
         "primary": "#374151",
-        "secondary": "#cd631c",
+        "secondary": "#0071b8",
         "primary-dark": "#374151",
-        "secondary-dark": "#b94e07",
+        "secondary-dark": "#005b94",
         "mm-grey": "#1f2937",
         "mm-grey-dark": "#19212d",
         "mm-white": "#fbfbfb",

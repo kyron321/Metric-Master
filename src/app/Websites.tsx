@@ -70,14 +70,14 @@ export const Websites = ({ session }: WebsitesProps) => {
 
   console.log(data);
   return (
-    <div className="shadow-lg rounded-lg p-8 bg-gray-900">
+    <div className="rounded-lg p-8 bg-gray-900">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-mm-white">Websites</h2>
         <button
           className="bg-secondary hover:bg-secondary-dark transition-colors text-mm-white px-4 py-2 rounded"
           onClick={() => setIsModalOpen(true)}
         >
-          Add a Website
+          Add a Website 
         </button>
       </div>
       <section className="space-y-4">
@@ -128,7 +128,7 @@ export const Websites = ({ session }: WebsitesProps) => {
               </a>
             </button>
             <button
-              className="bg-mm-red hover:bg-mm-red-dark text-mm-white px-2 py-2 rounded transition-colors"
+              className="bg-mm-red hover:bg-mm-red-dark text-mm-white px-4 py-2 rounded transition-colors"
               onClick={() => handleDelete(d.website)}
               disabled={deleteLoading}
             >

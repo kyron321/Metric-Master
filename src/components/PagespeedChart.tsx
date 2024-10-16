@@ -88,7 +88,7 @@ const PagespeedChart: React.FC<PagespeedChartProps> = ({ website }) => {
     <div style={{ color: "white", margin: "auto" }}>
       <h2 className="text-2xl font-bold text-mm-white pb-4">Pagespeed Insights Over Time</h2>
       <button
-        className="bg-mm-red hover:bg-mm-red-dark text-white px-3 py-1 rounded mb-4"
+        className="bg-secondary hover:bg-secondary-dark text-white px-3 py-1 rounded mb-4"
         onClick={handleExportCSV}
       >
         Export as CSV

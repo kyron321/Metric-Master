@@ -9,11 +9,11 @@ const SignOut = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       {session ? (
         <div className="flex flex-col items-center space-y-4 p-6 bg-mm-white dark:bg-gray-800 rounded-lg shadow-md">
-          <img
+          {/* <img
             src={session.user?.image as string}
             className="rounded-full h-20 w-20"
             alt="User Avatar"
-          />
+          /> */}
           <h1 className="text-3xl text-secondary font-bold">
             Welcome back, {session.user?.name}
           </h1>
