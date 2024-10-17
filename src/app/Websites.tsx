@@ -68,7 +68,6 @@ export const Websites = ({ session }: WebsitesProps) => {
   if (loading || deleteLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  console.log(data);
   return (
     <div className="rounded-lg p-8 bg-gray-900">
       <div className="flex justify-between items-center mb-6">

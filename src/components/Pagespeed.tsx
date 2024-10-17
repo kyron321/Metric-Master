@@ -43,7 +43,7 @@ interface WebsitesProps {
 const PageSpeed = ({ session }: WebsitesProps) => {
   const userId = session?.uid;
   const [url, setUrl] = useState("");
-  const [wordpress, setWordpress] = useState("");
+  const [wpurl, setWpUrl] = useState("");
   const [data, setData] = useState<{
     performance: number;
     accessibility: number;
@@ -63,8 +63,8 @@ const PageSpeed = ({ session }: WebsitesProps) => {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       fullUrl = `https://${url}`;
     }
-    
-    let wordpress = wordpress;
+
+    let wpFullUrl = wpurl;
 
     const websiteName = fullUrl
       .replace(/^(?:https?:\/\/)?(?:www\.)?([^\/]+).*$/, "$1")
@@ -92,6 +92,16 @@ const PageSpeed = ({ session }: WebsitesProps) => {
           seo: result.scores.seo,
         },
       });
+
+      const wordpressResponse = await fetch(
+        `/api/wordpress?url=${encodeURIComponent(wpurl)}`
+      );
+      if (!wordpressResponse.ok) {
+        throw new Error("Failed to fetch WordPress data");
+      }
+
+      const wordpressData = await wordpressResponse.json();
+      console.log("WordPress API response:", wordpressData);
     } catch (err) {
       setError("Failed to fetch data");
     } finally {
@@ -110,9 +120,9 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       />
       <input
         type="text"
-        value={wordpress}
-        onChange={(e) => setWordpress(e.target.value)}
-        placeholder="Enter Wordpress Application Password"
+        value={wpurl}
+        onChange={(e) => setWpUrl(e.target.value)}
+        placeholder="Enter wordpress URL (example.com)"
         className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
       />
       <button
@@ -125,7 +135,7 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       {error && <p className="text-red-500 mt-4">{error}</p>}
       {data && (
         <div className="mt-4">
-          <h2 className="text-xl font-bold mb-2">Your website has been successfully added!</h2>
+          <h2 className="text-xl font-bold mb-2 text-center">Your website has been successfully added!</h2>
         </div>
       )}
     </div>
