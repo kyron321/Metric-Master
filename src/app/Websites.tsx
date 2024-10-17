@@ -117,19 +117,21 @@ export const Websites = ({ session }: WebsitesProps) => {
                 </div>
               </div>
 
+              <Link href={`/analytics/${d.website}`}>
               <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
-                <Link href={`/analytics/${d.website}`}>View Analytics</Link>
+                  View Analytics
               </button>
-              <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
-                <a
+              </Link>
+              <a
                   className="flex gap-2"
                   href={`${d.fullUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+              <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
                   Visit Website
-                </a>
               </button>
+              </a>
               <button
                 className="bg-mm-red hover:bg-mm-red-dark text-mm-white px-4 py-2 rounded transition-colors"
                 onClick={() => handleDelete(d.website)}
