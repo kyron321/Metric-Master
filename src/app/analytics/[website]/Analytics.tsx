@@ -52,7 +52,7 @@ const Analytics: React.FC<AnalyticsProps> = ({ website }) => {
   const websiteData = data?.website;
 
   return (
-    <div className="p-8 bg-gray-900 text-mm-white flex flex-col text-center">
+    <div className="p-8 bg-gray-900 text-mm-white flex flex-col text-center pt-28">
       <h1 className="text-3xl font-bold text-mm-white pb-4">{websiteData.website}</h1>
       <div className="mt-4">
         {websiteData ? (
