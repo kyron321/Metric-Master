@@ -5,6 +5,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { gql, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
 import Papa from "papaparse";
+import Loader from "./Loader";
 
 interface PagespeedChartProps {
   website: string;
@@ -34,7 +35,7 @@ const PagespeedChart: React.FC<PagespeedChartProps> = ({ website }) => {
     skip: !userId || !website, // Skip the query if userId or website is not available
   });
 
-  if (status === "loading" || loading) return <p>Loading...</p>;
+  if (status === "loading" || loading) return <><Loader/></>;
   if (error) return <p>Error: {error.message}</p>;
 
   const websiteData = data?.website?.pagespeedInsightsMobile;

@@ -3,7 +3,7 @@ import UserIcon from "@/app/assets/icons/UserIcon";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex justify-between items-center p-4 bg-gray-800 text-mm-white">
+    <header className="absolute w-full flex justify-between items-center p-4 bg-gray-800 text-mm-white">
       <div className="text-2xl font-bold">
         <Link href="/">Metric Master</Link>
       </div>
