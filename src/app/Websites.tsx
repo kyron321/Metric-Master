@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import PageSpeed from "@/components/Pagespeed";
 import BinIcon from "./assets/icons/BinIcon";
 import Link from "next/link";
+import Loader from "@/components/Loader"
 
 interface WebsitesProps {
   session: Session;
@@ -65,7 +66,7 @@ export const Websites = ({ session }: WebsitesProps) => {
     });
   };
 
-  if (loading || deleteLoading) return <p>Loading...</p>;
+  if (loading || deleteLoading) return <p><Loader/></p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

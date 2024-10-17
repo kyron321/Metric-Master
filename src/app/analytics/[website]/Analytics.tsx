@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import CircleProgress from "@/components/CircleProgress";
 import PagespeedChart from "@/components/PagespeedChart"; // Adjust the import path as necessary
+import Loader from "@/components/Loader";
 
 const GET_WEBSITE = gql`
   query GetWebsite($userId: String!, $website: String!) {
@@ -45,7 +46,7 @@ const Analytics: React.FC<AnalyticsProps> = ({ website }) => {
     skip: !userId || !website, // Skip the query if userId or website is not available
   });
 
-  if (status === "loading" || loading) return <p>Loading...</p>;
+  if (status === "loading" || loading) return <><Loader/></>;
   if (error) return <p>Error: {error.message}</p>;
 
   const websiteData = data?.website;
