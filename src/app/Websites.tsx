@@ -117,6 +117,11 @@ export const Websites = ({ session }: WebsitesProps) => {
                 </div>
               </div>
 
+              <Link href={`/wordpress/${d.website}`}>
+              <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
+                  View Wordpress
+              </button>
+              </Link>
               <Link href={`/analytics/${d.website}`}>
               <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
                   View Analytics
