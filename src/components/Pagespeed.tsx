@@ -13,6 +13,9 @@ const UPDATE_PAGESPEED = gql`
     $bestPractices: [Float!]!
     $performance: [Float!]!
     $seo: [Float!]!
+    $wordpressUrl: String!
+    $wordpressUser: String!
+    $wordpressPass: String!
   ) {
     updatePageSpeed(
       website: $website
@@ -22,6 +25,9 @@ const UPDATE_PAGESPEED = gql`
       bestPractices: $bestPractices
       performance: $performance
       seo: $seo
+      wordpressUrl: $wordpressUrl
+      wordpressUser: $wordpressUser
+      wordpressPass: $wordpressPass
     ) {
       website
       userId
@@ -31,6 +37,11 @@ const UPDATE_PAGESPEED = gql`
         bestPractices
         performance
         seo
+      }
+      wordpress {
+        wordpressUrl
+        wordpressUser
+        wordpressPass
       }
     }
   }
@@ -90,11 +101,14 @@ const PageSpeed = ({ session }: WebsitesProps) => {
           bestPractices: result.scores.bestPractices,
           performance: result.scores.performance,
           seo: result.scores.seo,
+          wordpressUrl: wpurl,
+          wordpressUser: wpUser,
+          wordpressPass: wpPass,
         },
       });
 
       const wordpressResponse = await fetch(
-      `/api/wordpress?url=${encodeURIComponent(wpurl)}&wpUser=${encodeURIComponent(wpUser)}&wpPass=${encodeURIComponent(wpPass)}`
+        `/api/wordpress?url=${encodeURIComponent(wpurl)}&wpUser=${encodeURIComponent(wpUser)}&wpPass=${encodeURIComponent(wpPass)}`
       );
       if (!wordpressResponse.ok) {
         throw new Error("Failed to fetch WordPress data");

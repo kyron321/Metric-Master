@@ -52,6 +52,7 @@ const Wordpress: React.FC<AnalyticsProps> = ({ website }) => {
   return (
     <div className="p-8 bg-gray-900 text-mm-white flex flex-col text-center pt-28">
         <h1>Wordpress</h1>
+        
     </div>
   );
 };

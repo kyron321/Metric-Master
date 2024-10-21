@@ -19,7 +19,6 @@ const ddbClient = new DynamoDBClient({
 // Resolvers for the GraphQL API
 const resolvers = {
   Query: {
-    // Fetch websites by userId
     websites: async (_: any, { userId }: { userId: string }) => {
       const response = await ddbClient.send(
         new ScanCommand({
@@ -30,7 +29,6 @@ const resolvers = {
       const items = response.Items?.map((item) => unmarshall(item));
       return items?.filter((item) => item.userId === userId);
     },
-    // Fetch a single website by userId and website
     website: async (_: any, { userId, website }: { userId: string; website: string }) => {
       const response = await ddbClient.send(
         new ScanCommand({
@@ -44,7 +42,6 @@ const resolvers = {
   },
 
   Mutation: {
-    // Mutation to update PageSpeed data for a website
     updatePageSpeed: async (
       _: any,
       {
@@ -55,6 +52,9 @@ const resolvers = {
         bestPractices,
         performance,
         seo,
+        wordpressUrl,
+        wordpressUser,
+        wordpressPass,
       }: {
         website: string;
         userId: string;
@@ -63,6 +63,9 @@ const resolvers = {
         bestPractices: number[];
         performance: number[];
         seo: number[];
+        wordpressUrl: string;
+        wordpressUser: string;
+        wordpressPass: string;
       }
     ) => {
       const item = {
@@ -74,6 +77,11 @@ const resolvers = {
           bestPractices,
           performance,
           seo,
+        },
+        wordpress: {
+          wordpressUrl,
+          wordpressUser,
+          wordpressPass,
         },
       };
 
@@ -118,11 +126,18 @@ const typeDefs = gql`
     seo: [Float!]!
   }
 
+  type WordPress {
+    wordpressUrl: String!
+    wordpressUser: String!
+    wordpressPass: String!
+  }
+
   type Website {
     website: String!
     userId: String!
     fullUrl: String!
     pagespeedInsightsMobile: pagespeedInsightsMobile!
+    wordpress: WordPress!
   }
 
   type Query {
@@ -139,6 +154,9 @@ const typeDefs = gql`
       bestPractices: [Float!]!
       performance: [Float!]!
       seo: [Float!]!
+      wordpressUrl: String!
+      wordpressUser: String!
+      wordpressPass: String!
     ): Website
 
     deleteWebsite(website: String!, userId: String!): DeleteResponse
@@ -150,14 +168,12 @@ const typeDefs = gql`
   }
 `;
 
-// Apollo Server Setup
 const server = new ApolloServer({
   resolvers,
   typeDefs,
   plugins: [ApolloServerPluginLandingPageLocalDefault()],
 });
 
-// Next.js API Handler for GraphQL
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {
   context: async (req) => ({ req }),
 });
