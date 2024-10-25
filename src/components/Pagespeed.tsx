@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Session } from "next-auth";
+import LoaderAlt from "@/components/LoaderAlt";
 
 const UPDATE_PAGESPEED = gql`
   mutation UpdatePageSpeed(
@@ -111,7 +112,11 @@ const PageSpeed = ({ session }: WebsitesProps) => {
 
       if (isWordPress) {
         const wordpressResponse = await fetch(
-          `/api/wordpress?url=${encodeURIComponent(wpurl)}&wpUser=${encodeURIComponent(wpUser)}&wpPass=${encodeURIComponent(wpPass)}`
+          `/api/wordpress?url=${encodeURIComponent(
+            wpurl
+          )}&wpUser=${encodeURIComponent(wpUser)}&wpPass=${encodeURIComponent(
+            wpPass
+          )}`
         );
         if (!wordpressResponse.ok) {
           throw new Error("Failed to fetch WordPress data");
@@ -139,7 +144,9 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       </div>
       {isWordPress && (
         <div className="mb-4">
-          <label className="mr-2">Is the WordPress admin URL different to the front-end URL?</label>
+          <label className="mr-2">
+            Is the WordPress admin URL different to the front-end URL?
+          </label>
           <input
             type="checkbox"
             checked={isSameUrl}
@@ -184,14 +191,16 @@ const PageSpeed = ({ session }: WebsitesProps) => {
       <button
         onClick={handleFetchData}
         disabled={loading || !userId}
-        className="bg-secondary hover:bg-secondary-dark text-mm-white font-bold py-2 px-4 rounded w-full"
+        className="bg-secondary hover:bg-secondary-dark text-mm-white font-bold py-2 px-4 rounded w-full h-12" 
       >
-        {loading ? "Loading..." : "Add Website"}
+        {loading ? <LoaderAlt /> : "Add Website"}
       </button>
       {error && <p className="text-red-500 mt-4">{error}</p>}
       {data && (
         <div className="mt-4">
-          <h2 className="text-xl font-bold mb-2 text-center">Your website has been successfully added!</h2>
+          <h2 className="text-xl font-bold mb-2 text-center">
+            Your website has been successfully added!
+          </h2>
         </div>
       )}
     </div>
