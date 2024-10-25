@@ -57,6 +57,8 @@ const PageSpeed = ({ session }: WebsitesProps) => {
   const [wpurl, setWpUrl] = useState("");
   const [wpPass, setWpPass] = useState("");
   const [wpUser, setWpUser] = useState("");
+  const [isWordPress, setIsWordPress] = useState(false);
+  const [isSameUrl, setIsSameUrl] = useState(false);
   const [data, setData] = useState<{
     performance: number;
     accessibility: number;
@@ -107,15 +109,17 @@ const PageSpeed = ({ session }: WebsitesProps) => {
         },
       });
 
-      const wordpressResponse = await fetch(
-        `/api/wordpress?url=${encodeURIComponent(wpurl)}&wpUser=${encodeURIComponent(wpUser)}&wpPass=${encodeURIComponent(wpPass)}`
-      );
-      if (!wordpressResponse.ok) {
-        throw new Error("Failed to fetch WordPress data");
-      }
+      if (isWordPress) {
+        const wordpressResponse = await fetch(
+          `/api/wordpress?url=${encodeURIComponent(wpurl)}&wpUser=${encodeURIComponent(wpUser)}&wpPass=${encodeURIComponent(wpPass)}`
+        );
+        if (!wordpressResponse.ok) {
+          throw new Error("Failed to fetch WordPress data");
+        }
 
-      const wordpressData = await wordpressResponse.json();
-      console.log("WordPress API response:", wordpressData);
+        const wordpressData = await wordpressResponse.json();
+        console.log("WordPress API response:", wordpressData);
+      }
     } catch (err) {
       setError("Failed to fetch data");
     } finally {
@@ -125,6 +129,24 @@ const PageSpeed = ({ session }: WebsitesProps) => {
 
   return (
     <div className="text-mm-white">
+      <div className="mb-4">
+        <label className="mr-2">Is this a WordPress website?</label>
+        <input
+          type="checkbox"
+          checked={isWordPress}
+          onChange={(e) => setIsWordPress(e.target.checked)}
+        />
+      </div>
+      {isWordPress && (
+        <div className="mb-4">
+          <label className="mr-2">Is the WordPress admin URL different to the front-end URL?</label>
+          <input
+            type="checkbox"
+            checked={isSameUrl}
+            onChange={(e) => setIsSameUrl(e.target.checked)}
+          />
+        </div>
+      )}
       <input
         type="text"
         value={url}
@@ -132,27 +154,33 @@ const PageSpeed = ({ session }: WebsitesProps) => {
         placeholder="Enter website URL (example.com)"
         className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
       />
-      <input
-        type="text"
-        value={wpurl}
-        onChange={(e) => setWpUrl(e.target.value)}
-        placeholder="Enter wordpress URL (example.com)"
-        className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
-      />
-      <input
-        type="text"
-        value={wpUser}
-        onChange={(e) => setWpUser(e.target.value)}
-        placeholder="Enter wordpress application username"
-        className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
-      />
-      <input
-        type="text"
-        value={wpPass}
-        onChange={(e) => setWpPass(e.target.value)}
-        placeholder="Enter wordpress application password"
-        className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
-      />
+      {isWordPress && isSameUrl && (
+        <input
+          type="text"
+          value={wpurl}
+          onChange={(e) => setWpUrl(e.target.value)}
+          placeholder="Enter WordPress admin URL (example.com)"
+          className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
+        />
+      )}
+      {isWordPress && (
+        <>
+          <input
+            type="text"
+            value={wpUser}
+            onChange={(e) => setWpUser(e.target.value)}
+            placeholder="Enter WordPress application username"
+            className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
+          />
+          <input
+            type="text"
+            value={wpPass}
+            onChange={(e) => setWpPass(e.target.value)}
+            placeholder="Enter WordPress application password"
+            className="w-full p-2 mb-4 bg-gray-700 text-mm-white rounded"
+          />
+        </>
+      )}
       <button
         onClick={handleFetchData}
         disabled={loading || !userId}

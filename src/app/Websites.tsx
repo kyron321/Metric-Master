@@ -25,6 +25,11 @@ const GET_WEBSITES = gql`
         performance
         seo
       }
+      wordpress {
+        wordpressUrl
+        wordpressUser
+        wordpressPass
+      }
     }
   }
 `;
@@ -68,6 +73,7 @@ export const Websites = ({ session }: WebsitesProps) => {
 
   if (loading || deleteLoading) return <p><Loader/></p>;
   if (error) return <p>Error: {error.message}</p>;
+  console.log(data);
 
   return (
     <div className="rounded-lg p-8 bg-gray-900 pt-28">
@@ -117,11 +123,13 @@ export const Websites = ({ session }: WebsitesProps) => {
                 </div>
               </div>
 
-              <Link href={`/wordpress/${d.website}`}>
-              <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
-                  View Wordpress
-              </button>
-              </Link>
+              {d.wordpress.wordpressUrl && (
+                <Link href={`/wordpress/${d.website}`}>
+                  <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
+                    View Wordpress
+                  </button>
+                </Link>
+              )}
               <Link href={`/analytics/${d.website}`}>
               <button className="bg-mm-grey hover:bg-mm-grey-dark transition-colors text-mm-white px-4 py-2 rounded">
                   View Analytics
