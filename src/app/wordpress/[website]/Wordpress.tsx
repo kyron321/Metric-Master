@@ -84,7 +84,9 @@ const Wordpress: React.FC<AnalyticsProps> = ({ website }) => {
 
   const totalPlugins = wordpressData ? wordpressData.length : 0;
   const activePlugins = wordpressData ? wordpressData.filter((plugin: any) => plugin.status === "active").length : 0;
-  const pluginsNeedingUpdate = wordpressData ? wordpressData.filter((plugin: any) => plugin.update === "available").length : 0;
+  const pluginsNeedingUpdate = wordpressData
+    ? wordpressData.filter((plugin: any) => typeof plugin.needs_update === "string").length
+    : 0;
 
   return (
     <div className="p-8 bg-gray-900 text-mm-white flex flex-col text-center pt-28">
@@ -100,13 +102,14 @@ const Wordpress: React.FC<AnalyticsProps> = ({ website }) => {
             {wordpressData.map((plugin: any) => (
               <div key={plugin.plugin} className="bg-gray-800 p-6 rounded-lg shadow-md">
                 <h2 className="text-xl font-semibold mb-2">{plugin.name}</h2>
-                <p className="text-sm text-gray-400 mb-4">{plugin.plugin}</p>
                 <p className="text-gray-300 mb-4" dangerouslySetInnerHTML={{ __html: plugin.description.rendered }}></p>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-400">Status: {plugin.status}</span>
                   <span className="text-sm text-gray-400">Version: {plugin.version}</span>
-                  {plugin.update === "available" && (
-                    <span className="text-sm text-red-400">Update Available: {plugin.new_version}</span>
+                  {plugin.needs_update && (
+                    <span className="text-sm text-red-400">
+                      Update Available: {typeof plugin.needs_update === "string" ? plugin.needs_update : "Yes"}
+                    </span>
                   )}
                 </div>
               </div>
