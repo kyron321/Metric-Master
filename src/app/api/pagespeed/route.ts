@@ -18,7 +18,8 @@ export const GET = async (req: NextRequest) => {
     }
 
     const response = await axios.get(
-      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&category=accessibility&category=seo&category=best-practices&strategy=mobile`
+      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&category=accessibility&category=seo&category=best-practices&strategy=mobile`,
+      { timeout: 60000 } // Increase timeout to 30 seconds
     );
 
     const lighthouseResult = response.data.lighthouseResult;
